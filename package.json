@@ -1,0 +1,11 @@
+{
+  "name": "alfari16",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/alfari16/alfari16.git",
+  "author": "alfari16 <alif.anshory@yahoo.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@vercel/node": "^1.7.3"
+  }
+}

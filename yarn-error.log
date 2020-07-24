@@ -1,0 +1,36 @@
+Arguments: 
+  /home/alfari/.nvm/versions/node/v10.15.3/bin/node /usr/bin/yarn init
+
+PATH: 
+  /home/alfari/.nvm/versions/node/v10.15.3/bin:/home/alfari/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/var/lib/snapd/snap/bin:/home/alfari/Android/Sdk/emulator:/home/alfari/Android/Sdk/tools:/home/alfari/Android/Sdk/tools/bin:/home/alfari/Android/Sdk/platform-tools:/home/alfari/.config/composer/vendor/bin:/home/alfari/.yarn/bin/
+
+Yarn version: 
+  1.21.1
+
+Node version: 
+  10.15.3
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/usr/lib/node_modules/yarn/lib/cli.js:136925:13)
+      at Interface.emit (events.js:189:13)
+      at Interface._ttyWrite (readline.js:783:16)
+      at ReadStream.onkeypress (readline.js:168:10)
+      at ReadStream.emit (events.js:189:13)
+      at emitKeys (internal/readline.js:424:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1022:36)
+      at ReadStream.emit (events.js:189:13)
+      at addChunk (_stream_readable.js:284:12)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
