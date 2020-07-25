@@ -2,7 +2,6 @@ import { NowRequest, NowResponse } from '@vercel/node';
 import x from '../../assets/x';
 import o from '../../assets/o';
 import blank from '../../assets/blank';
-import redirection from '../../util/redirection';
 import { tictactoeData, ghRepo } from '../../util/github';
 import { currentTurn, hasWinner } from '../../util/tictactoe';
 
@@ -23,9 +22,9 @@ export default async (req: NowRequest, res: NowResponse) => {
   if (isImage) {
     const image =
       found.value === 'X'
-        ? x(winner === 'x')
+        ? x(winner === 'X')
         : found.value === 'O'
-        ? o(winner === 'o')
+        ? o(winner === 'O')
         : blank;
     res.setHeader('Content-Type', 'image/svg+xml');
     return res.send(image);
@@ -46,6 +45,8 @@ export default async (req: NowRequest, res: NowResponse) => {
     );
   }
 
-  res.setHeader('Content-Type', 'text/html');
-  return res.send(redirection);
+  res.writeHead(301, {
+    Location: 'https://github.com/alfari16',
+  });
+  res.end();
 };
