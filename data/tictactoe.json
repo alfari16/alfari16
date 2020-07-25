@@ -1,7 +1,7 @@
 [
   {
     "code": "A1",
-    "value": "X"
+    "value": ""
   },
   {
     "code": "A2",
@@ -9,7 +9,7 @@
   },
   {
     "code": "A3",
-    "value": "O"
+    "value": ""
   },
   {
     "code": "B1",
@@ -17,7 +17,7 @@
   },
   {
     "code": "B2",
-    "value": "X"
+    "value": ""
   },
   {
     "code": "B3",
@@ -25,7 +25,7 @@
   },
   {
     "code": "C1",
-    "value": "O"
+    "value": ""
   },
   {
     "code": "C2",
@@ -33,6 +33,6 @@
   },
   {
     "code": "C3",
-    "value": "O"
+    "value": ""
   }
 ]

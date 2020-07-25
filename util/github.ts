@@ -1,5 +1,6 @@
 // @ts-ignore
 import github from 'octonode';
+import localData from '../data/tictactoe.json';
 
 export const ghClient = github.client({
   username: process.env.GITHUB_USERNAME,
@@ -17,6 +18,11 @@ export const tictactoeData = async (): Promise<{
   const { sha, path, content } = (
     await ghRepo.contentsAsync('data/tictactoe.json')
   )[0];
+
+  if (process.env.NODE_ENV === 'development') {
+    return { sha, path, data: localData };
+  }
+
   const data = JSON.parse(Buffer.from(content, 'base64').toString('utf-8'));
   return { sha, path, data };
 };

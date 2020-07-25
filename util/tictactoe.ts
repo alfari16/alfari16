@@ -13,24 +13,40 @@ export const currentTurn = async (tictactoeData = null): Promise<string> => {
   return xCount <= oCount ? 'X' : 'O';
 };
 
-export const hasWinner = async (tictactoeData = null) => {
+export const hasWinner = async (
+  tictactoeData = null
+): Promise<boolean | string> => {
   tictactoeData = tictactoeData || (await dataRaw()).data;
-  console.log(tictactoeData);
 
   const x = tictactoeData.filter((el) => el.value === 'X').map((el) => el.code);
   const o = tictactoeData.filter((el) => el.value === 'O').map((el) => el.code);
 
-  const xWord = x.join('').replace(/\d/g, '');
-  const xDigit = x.join('').replace(/\D/g, '');
-  console.log(xWord, xDigit);
-  if (/A{3}|B{3}|C{3}/gm.test(xWord) || /1{3}|2{3}|3{3}/gm.test(xDigit))
+  let xWord = x.join('').replace(/\d/g, '');
+  let xDigit = x.join('').replace(/\D/g, '');
+
+  let oWord = o.join('').replace(/\d/g, '');
+  let oDigit = o.join('').replace(/\D/g, '');
+
+  for (const iterator of tictactoeData) {
+    if (['A1', 'B2', 'C3'].includes(iterator.code)) {
+      if (iterator.value === 'X') xWord += 'D';
+      else oWord += 'D';
+    }
+    if (['A3', 'B2', 'C1'].includes(iterator.code)) {
+      if (iterator.value === 'X') xDigit += '4';
+      else oDigit += '4';
+    }
+  }
+
+  if (
+    /A{3}|B{3}|C{3}|D{3}/gm.test(xWord) ||
+    /1{3}|2{3}|3{3}|4{3}/gm.test(xDigit)
+  )
     return 'X';
-
-  const oWord = o.join('').replace(/\d/g, '');
-  const oDigit = o.join('').replace(/\D/g, '');
-  console.log(oWord, oDigit);
-
-  if (/A{3}|B{3}|C{3}/gm.test(oWord) || /1{3}|2{3}|3{3}/gm.test(oDigit))
+  if (
+    /A{3}|B{3}|C{3}|D{3}/gm.test(oWord) ||
+    /1{3}|2{3}|3{3}|4{3}/gm.test(oDigit)
+  )
     return 'O';
   return false;
 };
