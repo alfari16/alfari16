@@ -14,8 +14,8 @@ A perfectionist developer. 2+ years experience in both frontend and backend Web 
 
 ### Checkout my latest Medium articles :star:
 
-<a target="_blank" href="https://alfari16.vercel.app/medium?index=0"><img width="400" height="120" src="https://alfari16.vercel.app/medium?index=0" alt="Medium Index 0"></a>
+<a target="_blank" href="https://alfari16.vercel.app/medium/0"><img src="https://alfari16.vercel.app/medium/0" alt="Medium Index 0"></a>
 
-<a target="_blank" href="https://alfari16.vercel.app/medium?index=1"><img width="400" height="120" src="https://alfari16.vercel.app/medium?index=1" alt="Medium Index 1"></a>
+<a target="_blank" href="https://alfari16.vercel.app/medium/1"><img src="https://alfari16.vercel.app/medium/1" alt="Medium Index 1"></a>
 
-<a target="_blank" href="https://alfari16.vercel.app/medium?index=3"><img width="400" height="120" src="https://alfari16.vercel.app/medium?index=3" alt="Medium Index 2"></a>
+<a target="_blank" href="https://alfari16.vercel.app/medium/3"><img src="https://alfari16.vercel.app/medium/3" alt="Medium Index 2"></a>

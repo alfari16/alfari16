@@ -1,5 +1,5 @@
 export default (isWinner = false) => `
-<svg fill="none" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+<svg fill="none" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
 	<foreignObject width="100%" height="100%">
 		<div xmlns="http://www.w3.org/1999/xhtml">
 			<style>
@@ -33,11 +33,11 @@ export default (isWinner = false) => `
 					position: relative;
 				}
 				.container{
-					height: 100px;
+					height: 80px;
 					display: flex;
 				}
 				h1 {
-					font-size: 100px;
+					font-size: 80px;
 					background: linear-gradient(-45deg, #d50000, #C51162, #AA00FF);
 					color: transparent;
 					background-clip: text;
@@ -57,7 +57,7 @@ export default (isWinner = false) => `
 					color: white;
 					font-size: 14px;
 					font-weight: bold;
-					width: 100px;
+					width: 80px;
 					background: #d50000;
 					text-align: center;
 				}

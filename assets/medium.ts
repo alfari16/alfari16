@@ -1,5 +1,5 @@
 export default ({ title, description, date, url, thumbnail }) => `
-<svg fill="none" width="600" height="120" xmlns="http://www.w3.org/1500/svg">
+<svg fill="none" width="800" height="120" xmlns="http://www.w3.org/2000/svg">
 	<foreignObject width="100%" height="100%">
 		<div xmlns="http://www.w3.org/1999/xhtml">
 			<style>
@@ -33,11 +33,12 @@ export default ({ title, description, date, url, thumbnail }) => `
           overflow: hidden;
           text-overflow: ellipsis;
 				}
-        img {
+        .left {
           margin-right: 10px;
           width: 150px;
           height: 100%;
-          object-fit: contain;
+          background-image: url(${thumbnail});
+          background-size: cover;
         }
         .right{
           flex: 1;
@@ -61,14 +62,16 @@ export default ({ title, description, date, url, thumbnail }) => `
         }
 				
 			</style>
-				<a class="container flex" href="${url}" target="__blank">
-					<img src="${thumbnail}" alt="${title}"/>
+      <div>
+        <a class="container flex" href="${url}" target="__blank">
+					<div class="left"></div>
           <div class="right">
             <h3>${title}</h3>
             <small>${date}</small>
             <p>${description}</p>
           </div>
 				</a>
+      </div>
 		</div>
 	</foreignObject>
 </svg>
