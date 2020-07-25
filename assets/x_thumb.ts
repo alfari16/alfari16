@@ -40,7 +40,7 @@ export default `
                 }
             </style>
             <div class="container">
-                <h1>O</h1>
+                <h1>X</h1>
             </div>
         </div>
     </foreignObject>

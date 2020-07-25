@@ -1,12 +1,13 @@
+export default `
 <svg fill="none" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
 	<foreignObject width="100%" height="100%">
 		<div xmlns="http://www.w3.org/1999/xhtml">
 			<style>
-			*{
-				margin: 0;
-				box-sizing: border-box;
-				font-family: sans-serif
-			}
+                *{
+                    margin: 0;
+                    box-sizing: border-box;
+                    font-family: sans-serif
+                }
 				@keyframes rotate {
 					0% {
 						transform: translateY(-3px);
@@ -46,7 +47,9 @@
 				}
 			</style>
 				<div class="container">
-				<h1>O</h1></div>
+				    <h1>O</h1>
+				</div>
 		</div>
 	</foreignObject>
 </svg>
+`

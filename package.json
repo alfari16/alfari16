@@ -6,6 +6,10 @@
   "author": "alfari16 <alif.anshory@yahoo.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@vercel/node": "^1.7.3"
+  },
+  "dependencies": {
+    "octonode": "^0.9.5"
   }
 }
