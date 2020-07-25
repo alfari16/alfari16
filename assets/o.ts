@@ -1,4 +1,4 @@
-export default `
+export default (isWinner = false) => `
 <svg fill="none" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
 	<foreignObject width="100%" height="100%">
 		<div xmlns="http://www.w3.org/1999/xhtml">
@@ -27,11 +27,14 @@ export default `
 						background-position: 0% 50%;
 					}
 				}
+				.flex{
+					align-items:center;
+					justify-content: center;
+					position: relative;
+				}
 				.container{
 					height: 100px;
 					display: flex;
-					align-items:center;
-					justify-content: center;
 				}
 				h1 {
 					font-size: 100px;
@@ -45,11 +48,29 @@ export default `
 					text-transform: uppercase;
 					animation: rotate ease-in-out 1s infinite alternate, gradientBackground 10s ease infinite;
 				}
+				.winner{
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%) rotate(-15deg);
+					border-radius: 5px;
+					color: white;
+					font-size: 14px;
+					font-weight: bold;
+					width: 100px;
+					background: #d50000;
+					text-align: center;
+				}
 			</style>
-				<div class="container">
-				    <h1>O</h1>
+				<div class="container flex">
+						<h1>O</h1>
+						${
+              isWinner
+                ? '<span class="winner flex bg">WINNER!<br/>Click to reset</span>'
+                : ''
+            }
 				</div>
 		</div>
 	</foreignObject>
 </svg>
-`
+`;

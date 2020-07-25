@@ -1,7 +1,7 @@
 export default `
 <html>
   <script>
-    window.history.go(-1);
+    window.location.href = 'https://github.com/alfari16/';
   </script>
 </html>
 `;

@@ -15,12 +15,13 @@ export default async (req: NowRequest, res: NowResponse) => {
   const accept = headers['accept'];
   const isImage = dest ? dest === 'image' : !/text\/html/.test(accept);
 
-  const data = await tictactoeData();
+  const { data, sha, path } = await tictactoeData();
   const found = data.find((el) => el.code === code);
 
   res.setHeader('Cache-Control', 'no-cache, max-age=0');
   if (isImage) {
-    const image = found.value === 'X' ? x : found.value === 'O' ? o : blank;
+    const image =
+      found.value === 'X' ? x(true) : found.value === 'O' ? o() : blank;
     res.setHeader('Content-Type', 'image/svg+xml');
     return res.send(image);
   }
@@ -32,10 +33,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     });
 
   if (found && !found.value) {
-    const { sha, path } = (
-      await ghRepo.contentsAsync('data/tictactoe.json')
-    )[0];
-    found.value = await currentTurn();
+    found.value = await currentTurn(data);
     await ghRepo.updateContentsAsync(
       path,
       'Update tictactoe data',

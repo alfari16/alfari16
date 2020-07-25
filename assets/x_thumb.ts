@@ -28,7 +28,7 @@ export default `
                 }
                 h1 {
                     font-size: 20px;
-                    background: linear-gradient(-45deg, #d50000, #C51162, #AA00FF);
+                    background: linear-gradient(-45deg, #fc5c7d, #6a82fb, #05dfd7);
                     color: transparent;
                     background-clip: text;
                     -webkit-background-clip: text;
