@@ -25,10 +25,10 @@ export default async (req: NowRequest, res: NowResponse) => {
     return res.send(image);
   }
 
-  const isCompleted = data.find((el) => !el.value);
-  if (isCompleted)
+  const isNotCompleted = data.find((el) => el.value);
+  if (!isNotCompleted)
     data.forEach((el) => {
-      el.code = '';
+      el.value = '';
     });
 
   if (found && !found.value) {

@@ -1,5 +1,5 @@
 export default `
-<svg fill="none" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+<svg fill="none" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
     <foreignObject width="100%" height="100%">
         <div xmlns="http://www.w3.org/1999/xhtml">
             <style>
@@ -21,13 +21,13 @@ export default `
                     }
                 }
                 .container{
-                    height: 40px;
+                    height: 20px;
                     display: flex;
                     align-items:center;
                     justify-content: center;
                 }
                 h1 {
-                    font-size: 40px;
+                    font-size: 20px;
                     background: linear-gradient(-45deg, #d50000, #C51162, #AA00FF);
                     color: transparent;
                     background-clip: text;
@@ -45,4 +45,4 @@ export default `
         </div>
     </foreignObject>
 </svg>
-`
+`;
