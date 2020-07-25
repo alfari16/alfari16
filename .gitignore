@@ -3,3 +3,4 @@ node_modules/*
 .vercel
 api/asset.ts
 api/data.ts
+api/winner.ts
