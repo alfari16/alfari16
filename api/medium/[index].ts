@@ -23,24 +23,33 @@ export default async (req: NowRequest, res: NowResponse) => {
   const accept = headers['accept'];
   const isImage = dest ? dest === 'image' : !/text\/html/.test(accept);
 
-  // if (isImage) {
-  res.setHeader('Cache-Control', 's-maxage=36000, stale-while-revalidate');
-  // res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Content-Type', 'image/svg+xml');
-  return res.send(
-    medium({
-      title,
-      thumbnail,
-      url,
-      date: moment(pubDate).format('DD MMM YYYY, HH:mm'),
-      description:
-        description
-          .replace(/<h3>.*<\/h3>|<figcaption>.*<\/figcaption>|<[^>]*>/gm, '')
-          .substring(0, 80) + '...',
-    })
-  );
-  // }
+  if (isImage) {
+    res.setHeader('Cache-Control', 's-maxage=36000, stale-while-revalidate');
+    // res.setHeader('Cache-Control', 'no-cache');
 
-  // res.writeHead(301, { Location: url });
-  // res.end();
+    const { data: thumbnailRaw } = await axios.get(thumbnail, {
+      responseType: 'arraybuffer',
+    });
+
+    const base64Img = Buffer.from(thumbnailRaw).toString('base64');
+    const imgTypeArr = thumbnail.split('.');
+    const imgType = imgTypeArr[imgTypeArr.length - 1];
+    const convertedThumbnail = `data:image/${imgType};base64,${base64Img}`;
+    res.setHeader('Content-Type', 'image/svg+xml');
+    return res.send(
+      medium({
+        title: title.length > 56 ? title.substring(0, 56) + ' ...' : title,
+        thumbnail: convertedThumbnail,
+        url,
+        date: moment(pubDate).format('DD MMM YYYY, HH:mm'),
+        description:
+          description
+            .replace(/<h3>.*<\/h3>|<figcaption>.*<\/figcaption>|<[^>]*>/gm, '')
+            .substring(0, 150) + '...',
+      })
+    );
+  }
+
+  res.writeHead(301, { Location: url });
+  res.end();
 };

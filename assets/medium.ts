@@ -20,10 +20,13 @@ export default ({ title, description, date, url, thumbnail }) => `
 				.flex {
 					display: flex;
 					align-items:center;
-				}
+        }
+        .outer-container{
+          height:120px;
+        }
 				.container{
-          height: 119px;
-          box-shadow: 1px 1px 6px rgba(0,0,0,.2);
+          height: 118px;
+          border: 1px solid rgba(0,0,0,.2);
           padding: 10px 20px;
           border-radius: 10px;
           background: rgb(255,255,255);
@@ -33,12 +36,11 @@ export default ({ title, description, date, url, thumbnail }) => `
           overflow: hidden;
           text-overflow: ellipsis;
 				}
-        .left {
+        img {
           margin-right: 10px;
           width: 150px;
           height: 100%;
-          background-image: url(${thumbnail});
-          background-size: cover;
+          object-fit: cover;
         }
         .right{
           flex: 1;
@@ -62,9 +64,9 @@ export default ({ title, description, date, url, thumbnail }) => `
         }
 				
 			</style>
-      <div>
+      <div class="outer-container flex">
         <a class="container flex" href="${url}" target="__blank">
-					<div class="left"></div>
+					<img src="${thumbnail}"/>
           <div class="right">
             <h3>${title}</h3>
             <small>${date}</small>
