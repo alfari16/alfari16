@@ -1,6 +1,5 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import axios from 'axios';
-import moment from 'moment';
+import { getArticle } from '../../util/medium';
 import medium from '../../assets/medium';
 
 export default async (req: NowRequest, res: NowResponse) => {
@@ -9,15 +8,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     headers,
   } = req;
 
-  const {
-    data: { items },
-  } = await axios.get(
-    'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@alfari'
-  );
-  const { title, pubDate, link: url, thumbnail, description } = items[
-    // @ts-ignore
-    index || 0
-  ];
+  const { title, thumbnail, url, date, description } = await getArticle(index);
 
   const dest = headers['sec-fetch-dest'] || headers['Sec-Fetch-Dest'];
   const accept = headers['accept'];
@@ -25,27 +16,16 @@ export default async (req: NowRequest, res: NowResponse) => {
 
   if (isImage) {
     res.setHeader('Cache-Control', 's-maxage=36000, stale-while-revalidate');
+    res.setHeader('Content-Type', 'image/svg+xml');
     // res.setHeader('Cache-Control', 'no-cache');
 
-    const { data: thumbnailRaw } = await axios.get(thumbnail, {
-      responseType: 'arraybuffer',
-    });
-
-    const base64Img = Buffer.from(thumbnailRaw).toString('base64');
-    const imgTypeArr = thumbnail.split('.');
-    const imgType = imgTypeArr[imgTypeArr.length - 1];
-    const convertedThumbnail = `data:image/${imgType};base64,${base64Img}`;
-    res.setHeader('Content-Type', 'image/svg+xml');
     return res.send(
       medium({
-        title: title.length > 56 ? title.substring(0, 56) + ' ...' : title,
-        thumbnail: convertedThumbnail,
+        title,
+        thumbnail,
         url,
-        date: moment(pubDate).format('DD MMM YYYY, HH:mm'),
-        description:
-          description
-            .replace(/<h3>.*<\/h3>|<figcaption>.*<\/figcaption>|<[^>]*>/gm, '')
-            .substring(0, 150) + '...',
+        date,
+        description,
       })
     );
   }
