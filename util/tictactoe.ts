@@ -1,4 +1,27 @@
+import { Client, query } from 'faunadb';
 import { tictactoeData as dataRaw } from './github';
+
+const COLLECTION_REF = '272071595693965830';
+
+const client = new Client({
+  secret: process.env.FAUNA_SECRET,
+});
+
+export const tictactoeData = async () => {
+  const {
+    data: { codes },
+  } = await client.query(
+    query.Get(query.Ref(query.Collection('code'), COLLECTION_REF))
+  );
+  return codes;
+};
+
+export const updateTictactoeData = (tictactoeData) =>
+  client.query(
+    query.Update(query.Ref(query.Collection('code'), COLLECTION_REF), {
+      data: { codes: tictactoeData },
+    })
+  );
 
 export const currentTurn = async (tictactoeData = null): Promise<string> => {
   const data = tictactoeData || (await dataRaw()).data;
