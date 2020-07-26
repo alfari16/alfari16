@@ -12,6 +12,10 @@
 
 A perfectionist developer. 2+ years experience in both frontend and backend Web Development.
 
+:e-mail: e-mail: alif.anshory16@gmail.com
+
+:thought_balloon: twitter: @alif_irfan16
+
 ### Checkout my latest Medium articles :star:
 
 ![Medium Index 0](https://alfari16.vercel.app/medium/0)
