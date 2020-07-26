@@ -44,13 +44,16 @@ export const hasWinner = async (
   for (const iterator of tictactoeData) {
     if (['A1', 'B2', 'C3'].includes(iterator.code)) {
       if (iterator.value === 'X') xWord += 'D';
-      else oWord += 'D';
+      if (iterator.value === 'O') oWord += 'D';
     }
     if (['A3', 'B2', 'C1'].includes(iterator.code)) {
       if (iterator.value === 'X') xDigit += '4';
-      else oDigit += '4';
+      if (iterator.value === 'O') oDigit += '4';
     }
   }
+
+  // console.log(tictactoeData);
+  // console.log(xWord, xDigit, oWord, oDigit);
 
   if (
     /A{3}|B{3}|C{3}|D{3}/gm.test(xWord) ||
