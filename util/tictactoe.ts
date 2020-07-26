@@ -1,5 +1,4 @@
 import { Client, query } from 'faunadb';
-import { tictactoeData as dataRaw } from './github';
 
 const COLLECTION_REF = '272071595693965830';
 
@@ -23,8 +22,10 @@ export const updateTictactoeData = (tictactoeData) =>
     })
   );
 
-export const currentTurn = async (tictactoeData = null): Promise<string> => {
-  const data = tictactoeData || (await dataRaw()).data;
+export const currentTurn = async (
+  tictactoeDataCached = null
+): Promise<string> => {
+  const data = tictactoeDataCached || (await tictactoeData());
   const xCount = data.reduce(
     (prev, el) => (el.value === 'X' ? prev + 1 : prev),
     0
@@ -37,12 +38,12 @@ export const currentTurn = async (tictactoeData = null): Promise<string> => {
 };
 
 export const hasWinner = async (
-  tictactoeData = null
+  tictactoeDataCached = null
 ): Promise<boolean | string> => {
-  tictactoeData = tictactoeData || (await dataRaw()).data;
+  const data = tictactoeDataCached || (await tictactoeData());
 
-  const x = tictactoeData.filter((el) => el.value === 'X').map((el) => el.code);
-  const o = tictactoeData.filter((el) => el.value === 'O').map((el) => el.code);
+  const x = data.filter((el) => el.value === 'X').map((el) => el.code);
+  const o = data.filter((el) => el.value === 'O').map((el) => el.code);
 
   let xWord = x.join('').replace(/\d/g, '');
   let xDigit = x
@@ -64,7 +65,7 @@ export const hasWinner = async (
     .join('')
     .replace(/\D/g, '');
 
-  for (const iterator of tictactoeData) {
+  for (const iterator of data) {
     if (['A1', 'B2', 'C3'].includes(iterator.code)) {
       if (iterator.value === 'X') xWord += 'D';
       if (iterator.value === 'O') oWord += 'D';
@@ -75,7 +76,7 @@ export const hasWinner = async (
     }
   }
 
-  // console.log(tictactoeData);
+  // console.log(data);
   // console.log(xWord, xDigit, oWord, oDigit);
 
   if (
@@ -91,9 +92,9 @@ export const hasWinner = async (
   return false;
 };
 
-export const isDraw = async (tictactoeData = null): Promise<boolean> => {
-  tictactoeData = tictactoeData || (await dataRaw()).data;
-  const filtered = tictactoeData.filter((el) => el.value);
+export const isDraw = async (tictactoeDataCached = null): Promise<boolean> => {
+  const data = tictactoeDataCached || (await tictactoeData());
+  const filtered = data.filter((el) => el.value);
   if (filtered.length === 9) return true;
   return false;
 };
