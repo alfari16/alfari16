@@ -22,10 +22,24 @@ export const hasWinner = async (
   const o = tictactoeData.filter((el) => el.value === 'O').map((el) => el.code);
 
   let xWord = x.join('').replace(/\d/g, '');
-  let xDigit = x.join('').replace(/\D/g, '');
+  let xDigit = x
+    .sort((a, b) => {
+      const aInt = a.replace(/\D/gm, '');
+      const bInt = b.replace(/\D/gm, '');
+      return aInt - bInt;
+    })
+    .join('')
+    .replace(/\D/g, '');
 
   let oWord = o.join('').replace(/\d/g, '');
-  let oDigit = o.join('').replace(/\D/g, '');
+  let oDigit = o
+    .sort((a, b) => {
+      const aInt = a.replace(/\D/gm, '');
+      const bInt = b.replace(/\D/gm, '');
+      return aInt - bInt;
+    })
+    .join('')
+    .replace(/\D/g, '');
 
   for (const iterator of tictactoeData) {
     if (['A1', 'B2', 'C3'].includes(iterator.code)) {
@@ -48,5 +62,12 @@ export const hasWinner = async (
     /1{3}|2{3}|3{3}|4{3}/gm.test(oDigit)
   )
     return 'O';
+  return false;
+};
+
+export const isDraw = async (tictactoeData = null): Promise<boolean> => {
+  tictactoeData = tictactoeData || (await dataRaw()).data;
+  const filtered = tictactoeData.filter((el) => el.value);
+  if (filtered.length === 9) return true;
   return false;
 };

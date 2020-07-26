@@ -1,4 +1,4 @@
-export default (isWinner = false) => `
+export default (isWinner = false, winnerFlag = 'WINNER!') => `
 <svg fill="none" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
 	<foreignObject width="100%" height="100%">
 		<div xmlns="http://www.w3.org/1999/xhtml">
@@ -55,7 +55,7 @@ export default (isWinner = false) => `
 					transform: translate(-50%, -50%) rotate(-15deg);
 					border-radius: 5px;
 					color: white;
-					font-size: 14px;
+					font-size: 10px;
 					font-weight: bold;
 					width: 80px;
 					background: #6a82fb;
@@ -66,7 +66,7 @@ export default (isWinner = false) => `
 					<h1>X</h1>
 					${
             isWinner
-              ? '<span class="winner flex bg">WINNER!<br/>Click to reset</span>'
+              ? `<span class="winner flex bg">${winnerFlag}<br/>Click to reset</span>`
               : ''
           }
 				</div>
