@@ -30,7 +30,7 @@ export default async (req: NowRequest, res: NowResponse) => {
     return res.send(image);
   }
 
-  if (hasWinner)
+  if (winner)
     data.forEach((el) => {
       el.value = '';
     });
