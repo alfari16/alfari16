@@ -1,6 +1,6 @@
 ### Tic Tac Toe on Github
 
-**Its your turn.** Click on empty space to fill with ![turn](https://alfari16.vercel.app/turn).
+**It's your turn.** Click on an empty space to fill with ![turn](https://alfari16.vercel.app/turn).
 
 |     | A                                                                                                          | B                                                                                                          | C                                                                                                          |
 | --- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -16,10 +16,10 @@ A perfectionist developer. 2+ years experience in both frontend and backend Web 
 
 :thought_balloon: twitter: @alif_irfan16
 
-### Checkout my latest Medium articles :star:
+### Checkout my latest Medium articles :bookmark_tabs:
 
-![Medium Index 0](https://alfari16.vercel.app/medium/0)
+<a target="_blank" href="https://alfari16.vercel.app/medium/0"><img src="https://alfari16.vercel.app/medium/0" alt="Medium Index 0"></a>
 
-![Medium Index 1](https://alfari16.vercel.app/medium/1)
+<a target="_blank" href="https://alfari16.vercel.app/medium/1"><img src="https://alfari16.vercel.app/medium/1" alt="Medium Index 1"></a>
 
-![Medium Index 2](https://alfari16.vercel.app/medium/2)
+<a target="_blank" href="https://alfari16.vercel.app/medium/2"><img src="https://alfari16.vercel.app/medium/2" alt="Medium Index 2"></a>
