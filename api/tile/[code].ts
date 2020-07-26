@@ -49,7 +49,7 @@ export default async (req: NowRequest, res: NowResponse) => {
   }
 
   res.writeHead(301, {
-    Location: 'file:///home/alfari/Documents/Misc/alfari16/README.md',
+    Location: 'https://github.com/alfari16',
   });
   res.end();
 };
