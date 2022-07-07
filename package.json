@@ -12,7 +12,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "faunadb": "^2.14.2",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "octonode": "^0.9.5"
   }
 }
