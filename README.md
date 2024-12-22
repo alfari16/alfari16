@@ -1,6 +1,6 @@
 ### Tic Tac Toe on Github
 
-**It's your turn.** Click on an empty space to fill with ![turn](https://alfari16.vercel.app/turn).
+**It's your turn!** Click on an empty space to fill with ![turn](https://alfari16.vercel.app/turn).
 
 |     | A                                                                                                          | B                                                                                                          | C                                                                                                          |
 | --- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -8,11 +8,17 @@
 | 2   | <a href="https://alfari16.vercel.app/tile/A2"><img src="https://alfari16.vercel.app/tile/A2" alt="A2"></a> | <a href="https://alfari16.vercel.app/tile/B2"><img src="https://alfari16.vercel.app/tile/B2" alt="B2"></a> | <a href="https://alfari16.vercel.app/tile/C2"><img src="https://alfari16.vercel.app/tile/C2" alt="C2"></a> |
 | 3   | <a href="https://alfari16.vercel.app/tile/A3"><img src="https://alfari16.vercel.app/tile/A3" alt="A3"></a> | <a href="https://alfari16.vercel.app/tile/B3"><img src="https://alfari16.vercel.app/tile/B3" alt="B3"></a> | <a href="https://alfari16.vercel.app/tile/C3"><img src="https://alfari16.vercel.app/tile/C3" alt="C3"></a> |
 
-### Hi there! Alif here. :wave:
+Total played ![total played](https://alfari16.vercel.app/played). <br> You played ![self played](https://alfari16.vercel.app/played?self=true).
 
-A perfectionist developer. 5+ years experience in both frontend and backend Web Development.
-:e-mail: e-mail: alif.anshory16@gmail.com
-:thought_balloon: twitter: @alif_irfan16
+## Hi there! Alif here. :wave:
+
+A seasoned Software engineer with a strong Backend and System Programming background, plus a Web Frontend skills.
+
+🌐 [alif.web.id](https://alif.web.id)
+
+📩 alif.anshory16@gmail.com
+
+🐦 @alif_irfan16 (X/twitter)
 
 ### Checkout my latest Medium articles :bookmark_tabs:
 
