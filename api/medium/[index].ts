@@ -1,8 +1,8 @@
-import { NowRequest, NowResponse } from '@vercel/node';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 import { getArticle } from '../../util/medium';
 import medium from '../../assets/medium';
 
-export default async (req: NowRequest, res: NowResponse) => {
+export default async (req: VercelRequest, res: VercelResponse) => {
   const {
     query: { index },
     headers,
@@ -11,7 +11,7 @@ export default async (req: NowRequest, res: NowResponse) => {
   const { title, thumbnail, url, date, description } = await getArticle(index);
 
   const dest = headers['sec-fetch-dest'] || headers['Sec-Fetch-Dest'];
-  const accept = headers['accept'];
+  const accept = headers['accept'] || '';
   const isImage = dest ? dest === 'image' : !/text\/html/.test(accept);
 
   if (isImage) {

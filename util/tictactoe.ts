@@ -1,49 +1,53 @@
-import { Client, query } from "faunadb";
+import { Client, fql } from "fauna";
+
+interface Tile {
+  code: "A1" | "A2" | "A3" | "B1" | "B2" | "B3" | "C1" | "C2" | "C3";
+  value: "X" | "O" | "";
+}
 
 const COLLECTION_REF = "272071595693965830";
 const COUNTER_REF = "272739253159461381";
 
 const client = new Client({
-  secret: process.env.FAUNA_SECRET,
+  secret: "fnAFzRcEh_ACQdeT-cvZt2cNVSneufjoFqPDthXW",
 });
 
-export const tictactoeData = async () => {
+export const stats = async (): Promise<{
+  clicks: string;
+  ips: Array<Record<string, number>>;
+}> => {
+  const { data } = await client.query(fql`code.byId(${COUNTER_REF})`);
+  return data;
+};
+
+export const tictactoeData = async (): Promise<Array<Tile>> => {
   const {
     data: { codes },
-  } = await client.query(
-    query.Get(query.Ref(query.Collection("code"), COLLECTION_REF))
-  );
+  } = await client.query(fql`code.byId(${COLLECTION_REF})`);
   return codes;
 };
 
-export const updateTictactoeData = async (tictactoeData, clientIp) => {
-  let {
-    data: { clicks, ips },
-  } = await client.query(
-    query.Get(query.Ref(query.Collection("code"), COUNTER_REF))
-  );
-  clicks += 1;
-  if (!ips[clientIp]) {
-    ips[clientIp] = 0;
-  }
+export const updateTictactoeData = async (tictactoeData, clientIp: string) => {
+  const { clicks, ips } = await stats();
+  if (!ips[clientIp]) ips[clientIp] = 0;
   ips[clientIp] += 1;
-  return Promise.all([
-    client.query(
-      query.Update(query.Ref(query.Collection("code"), COLLECTION_REF), {
-        data: { codes: tictactoeData },
-      })
-    ),
-    client.query(
-      query.Update(query.Ref(query.Collection("code"), COUNTER_REF), {
-        data: { clicks: clicks, ips },
-      })
-    ),
-  ]);
+
+  return client.query(fql`
+  let stats = code.byId(${COUNTER_REF})
+  stats?.update({
+    clicks: ${clicks} + 1,
+    ips: ${ips}
+  })
+  let data = code.byId(${COLLECTION_REF})
+  data?.update({
+    codes: ${tictactoeData}
+  })
+`);
 };
 
 export const currentTurn = async (
-  tictactoeDataCached = null
-): Promise<string> => {
+  tictactoeDataCached: Array<Tile> | null = null
+): Promise<Tile["value"]> => {
   const data = tictactoeDataCached || (await tictactoeData());
   const xCount = data.reduce(
     (prev, el) => (el.value === "X" ? prev + 1 : prev),
@@ -57,7 +61,7 @@ export const currentTurn = async (
 };
 
 export const hasWinner = async (
-  tictactoeDataCached = null
+  tictactoeDataCached: Array<Tile> | null = null
 ): Promise<boolean | string> => {
   const data = tictactoeDataCached || (await tictactoeData());
 
@@ -67,8 +71,8 @@ export const hasWinner = async (
   let xWord = x.join("").replace(/\d/g, "");
   let xDigit = x
     .sort((a, b) => {
-      const aInt = a.replace(/\D/gm, "");
-      const bInt = b.replace(/\D/gm, "");
+      const aInt = Number(a.replace(/\D/gm, ""));
+      const bInt = Number(b.replace(/\D/gm, ""));
       return aInt - bInt;
     })
     .join("")
@@ -77,8 +81,8 @@ export const hasWinner = async (
   let oWord = o.join("").replace(/\d/g, "");
   let oDigit = o
     .sort((a, b) => {
-      const aInt = a.replace(/\D/gm, "");
-      const bInt = b.replace(/\D/gm, "");
+      const aInt = Number(a.replace(/\D/gm, ""));
+      const bInt = Number(b.replace(/\D/gm, ""));
       return aInt - bInt;
     })
     .join("")
@@ -108,16 +112,11 @@ export const hasWinner = async (
   return false;
 };
 
-export const isDraw = async (tictactoeDataCached = null): Promise<boolean> => {
+export const isDraw = async (
+  tictactoeDataCached: Array<Tile> | null = null
+): Promise<boolean> => {
   const data = tictactoeDataCached || (await tictactoeData());
   const filtered = data.filter((el) => el.value);
   if (filtered.length === 9) return true;
   return false;
-};
-
-export const stats = async () => {
-  const { data } = await client.query(
-    query.Get(query.Ref(query.Collection("code"), COUNTER_REF))
-  );
-  return data;
 };
