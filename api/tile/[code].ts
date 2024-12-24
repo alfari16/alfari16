@@ -37,9 +37,9 @@ export default async (req: VercelRequest, res: VercelResponse) => {
   if (isImage) {
     const image =
       found.value === "X"
-        ? x(winner === "X" || isDrawLocal, isDrawLocal ? "DRAW!" : "WINNER!")
+        ? x(winner === "X" || isDrawLocal, winner === "X" ? "WINNER!" : "DRAW!")
         : found.value === "O"
-        ? o(winner === "O" || isDrawLocal, isDrawLocal ? "DRAW!" : "WINNER!")
+        ? o(winner === "O" || isDrawLocal, winner === "O" ? "WINNER!" : "DRAW!")
         : blank;
     res.setHeader("Content-Type", "image/svg+xml");
     return res.send(image);
