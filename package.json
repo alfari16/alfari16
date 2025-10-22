@@ -1,17 +1,18 @@
 {
   "name": "alfari16",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "2.0.0",
+  "main": "src/index.ts",
   "repository": "https://github.com/alfari16/alfari16.git",
   "author": "alfari16 <alif.anshory@yahoo.com>",
   "license": "MIT",
-  "dependencies": {
-    "@vercel/node": "^5.0.0",
-    "axios": "^1.7.9",
-    "fauna": "^2.4.1",
-    "moment": "^2.30.1"
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
   },
-  "engines": {
-    "node": "20.12.1"
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241022.0",
+    "typescript": "^5.6.3",
+    "wrangler": "^3.86.0"
   }
 }

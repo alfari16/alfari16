@@ -1,0 +1,17 @@
+name = "alfari16-tictactoe"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+node_compat = true
+
+# Durable Objects bindings
+[[durable_objects.bindings]]
+name = "GAME_STATE"
+class_name = "GameState"
+
+# Migrations for Durable Objects
+[[migrations]]
+tag = "v1"
+new_classes = ["GameState"]
+
+# Environment variables (set these via wrangler secret put)
+# MEDIUM_USER - Your Medium username (optional)
