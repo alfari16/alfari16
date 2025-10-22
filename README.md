@@ -1,6 +1,6 @@
 ## Tic Tac Toe on Github  ![Total Played](https://alfari16-tictactoe.workers.dev/played)
 
-**It's your turn!** Click on an empty space to fill with ![turn](https://alfari16-tictactoe.workers.dev/turn).
+**Challenge the AI!** Play Tic Tac Toe against a hard-difficulty AI opponent. You play as ![turn](https://alfari16-tictactoe.workers.dev/turn) - click on an empty space to make your move, and the AI will respond instantly!
 
 |     | A                                                                                                          | B                                                                                                          | C                                                                                                          |
 | --- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -21,12 +21,22 @@
 
 ---
 
+## Game Features
+
+- **Hard AI Opponent** - Play against an unbeatable AI powered by the Minimax algorithm with alpha-beta pruning
+- **Single-Player Mode** - You always play as X, AI plays as O
+- **Instant Response** - AI calculates and makes its move immediately after yours
+- **Optimal Play** - The AI plays perfectly, making it nearly impossible to win (best you can do is draw!)
+- **Auto-Reset** - Game automatically resets after a win or draw
+- **Global Statistics** - Track total games played across all users
+
 ## Tech Stack
 
 This project is now powered by:
 - **Cloudflare Workers** - Serverless edge computing platform
 - **Durable Objects** - Consistent, low-latency data storage (replacing FaunaDB)
 - **TypeScript** - Type-safe development
+- **Minimax Algorithm** - Hard-difficulty AI with alpha-beta pruning
 - **SVG** - Dynamic graphics generation
 
 Previously hosted on Vercel with FaunaDB, now fully migrated to Cloudflare's infrastructure for better performance and reliability.
@@ -78,6 +88,7 @@ src/
 ├── index.ts         # Main Worker entry point with routing
 ├── GameState.ts     # Durable Object for game state management
 ├── tictactoe.ts     # Game logic utilities
+├── ai.ts            # Minimax AI algorithm (hard difficulty)
 ├── medium.ts        # Medium article fetcher
 └── assets/          # SVG generators
     ├── blank.ts     # Empty tile
@@ -107,6 +118,8 @@ This project was fully migrated from Vercel + FaunaDB to Cloudflare Workers + Du
 - ✅ Implemented Durable Objects for state management
 - ✅ Migrated to Cloudflare Workers runtime
 - ✅ Removed axios and moment dependencies (using native fetch and date formatting)
+- ✅ Added hard-difficulty AI opponent using Minimax algorithm
+- ✅ Converted from multiplayer to single-player vs AI
 
 **Benefits:**
 - Better global edge performance
@@ -114,3 +127,4 @@ This project was fully migrated from Vercel + FaunaDB to Cloudflare Workers + Du
 - No cold starts
 - Better free tier limits
 - Simplified architecture
+- Challenging AI gameplay with optimal strategy

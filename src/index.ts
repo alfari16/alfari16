@@ -8,6 +8,7 @@ import {
   isDraw,
 } from './tictactoe';
 import { getArticle } from './medium';
+import { findBestMove, getAIPlayer, shouldAIMove } from './ai';
 
 // Import assets
 import statsGreen from './assets/stats_green';
@@ -81,9 +82,9 @@ async function handlePlayed(request: Request, gameState: DurableObjectStub): Pro
 }
 
 async function handleTurn(request: Request, gameState: DurableObjectStub): Promise<Response> {
-  const turn = await currentTurn(null, gameState);
-
-  return new Response(turn === "X" ? thumbX : thumbO, {
+  // In single-player mode, human is always X and always goes first
+  // So we always show X as it's always the player's turn to click
+  return new Response(thumbX, {
     headers: {
       "Content-Type": "image/svg+xml",
       "Cache-Control": "no-cache, max-age=0",
@@ -127,6 +128,7 @@ async function handleTile(
   }
 
   // Handle click (HTML request)
+  // If game is over, reset the board
   if (winner || isDrawLocal) {
     data.forEach((el) => {
       el.value = "";
@@ -135,9 +137,29 @@ async function handleTile(
 
   const clientIp = request.headers.get("CF-Connecting-IP") || "unknown";
 
+  // Only process if the clicked tile is empty
   if (found && !found.value) {
-    found.value = await currentTurn(data, gameState);
+    // Human player (always X) makes their move
+    found.value = "X";
     await updateTictactoeData(gameState, data, clientIp);
+
+    // Check if game ended after human's move
+    const winnerAfterHuman = await hasWinner(data);
+    const drawAfterHuman = await isDraw(data);
+
+    // If game is not over, AI makes its move
+    if (!winnerAfterHuman && !drawAfterHuman) {
+      const aiPlayer = getAIPlayer({ codes: data });
+      const aiMove = findBestMove({ codes: data }, aiPlayer);
+
+      if (aiMove) {
+        const aiTile = data.find((el) => el.code === aiMove);
+        if (aiTile && !aiTile.value) {
+          aiTile.value = aiPlayer;
+          await updateTictactoeData(gameState, data, "AI");
+        }
+      }
+    }
   }
 
   return Response.redirect("https://github.com/alfari16", 301);
