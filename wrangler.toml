@@ -1,4 +1,4 @@
-name = "alfari16-tictactoe"
+name = "alfari16"
 main = "src/index.ts"
 compatibility_date = "2024-01-01"
 node_compat = true
@@ -11,7 +11,7 @@ class_name = "GameState"
 # Migrations for Durable Objects
 [[migrations]]
 tag = "v1"
-new_classes = ["GameState"]
+new_sqlite_classes = ["GameState"]
 
 # Environment variables (set these via wrangler secret put)
 # MEDIUM_USER - Your Medium username (optional)
