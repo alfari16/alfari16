@@ -24,7 +24,7 @@ export class GameState {
 
   private async initializeTables() {
     // Create game_state table
-    await this.sql.exec(`
+    this.sql.exec(`
       CREATE TABLE IF NOT EXISTS game_state (
         code TEXT PRIMARY KEY,
         value TEXT NOT NULL DEFAULT ''
@@ -32,7 +32,7 @@ export class GameState {
     `);
 
     // Create stats table
-    await this.sql.exec(`
+    this.sql.exec(`
       CREATE TABLE IF NOT EXISTS stats (
         key TEXT PRIMARY KEY,
         value INTEGER NOT NULL DEFAULT 0
@@ -40,7 +40,7 @@ export class GameState {
     `);
 
     // Create ip_stats table
-    await this.sql.exec(`
+    this.sql.exec(`
       CREATE TABLE IF NOT EXISTS ip_stats (
         ip TEXT PRIMARY KEY,
         clicks INTEGER NOT NULL DEFAULT 0
@@ -48,18 +48,18 @@ export class GameState {
     `);
 
     // Initialize default game state if empty
-    const count = await this.sql.exec(`SELECT COUNT(*) as count FROM game_state`);
-    if (count.rows[0].count === 0) {
+    const countResult = this.sql.exec(`SELECT COUNT(*) as count FROM game_state`).toArray();
+    if (countResult.length === 0 || (countResult[0] as any).count === 0) {
       const tiles = ["A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"];
       for (const code of tiles) {
-        await this.sql.exec(`INSERT INTO game_state (code, value) VALUES (?, '')`, code);
+        this.sql.exec(`INSERT INTO game_state (code, value) VALUES (?, '')`, code);
       }
     }
 
     // Initialize stats if not exists
-    const statsCount = await this.sql.exec(`SELECT COUNT(*) as count FROM stats WHERE key = 'clicks'`);
-    if (statsCount.rows[0].count === 0) {
-      await this.sql.exec(`INSERT INTO stats (key, value) VALUES ('clicks', 0)`);
+    const statsResult = this.sql.exec(`SELECT COUNT(*) as count FROM stats WHERE key = 'clicks'`).toArray();
+    if (statsResult.length === 0 || (statsResult[0] as any).count === 0) {
+      this.sql.exec(`INSERT INTO stats (key, value) VALUES ('clicks', 0)`);
     }
   }
 
@@ -90,14 +90,14 @@ export class GameState {
 
   private async getStats(): Promise<Response> {
     // Get total clicks
-    const clicksResult = await this.sql.exec(`SELECT value FROM stats WHERE key = 'clicks'`);
-    const clicks = clicksResult.rows[0]?.value || 0;
+    const clicksResult = this.sql.exec(`SELECT value FROM stats WHERE key = 'clicks'`).toArray();
+    const clicks = (clicksResult[0] as any)?.value || 0;
 
     // Get IP stats
-    const ipResult = await this.sql.exec(`SELECT ip, clicks FROM ip_stats`);
+    const ipResult = this.sql.exec(`SELECT ip, clicks FROM ip_stats`).toArray();
     const ips: { [ip: string]: number } = {};
-    for (const row of ipResult.rows) {
-      ips[row.ip] = row.clicks;
+    for (const row of ipResult) {
+      ips[(row as any).ip] = (row as any).clicks;
     }
 
     const stats: StatsData = { clicks, ips };
@@ -108,9 +108,9 @@ export class GameState {
   }
 
   private async getGameState(): Promise<Response> {
-    const result = await this.sql.exec(`SELECT code, value FROM game_state ORDER BY code`);
+    const result = this.sql.exec(`SELECT code, value FROM game_state ORDER BY code`).toArray();
 
-    const codes: TileData[] = result.rows.map(row => ({
+    const codes: TileData[] = result.map((row: any) => ({
       code: row.code,
       value: row.value as "X" | "O" | ""
     }));
@@ -125,9 +125,9 @@ export class GameState {
   private async updateGame(body: any): Promise<Response> {
     const { gameState, clientIp } = body;
 
-    // Update game state in a transaction
+    // Update game state
     for (const tile of gameState.codes) {
-      await this.sql.exec(
+      this.sql.exec(
         `UPDATE game_state SET value = ? WHERE code = ?`,
         tile.value,
         tile.code
@@ -135,11 +135,11 @@ export class GameState {
     }
 
     // Update stats - increment total clicks
-    await this.sql.exec(`UPDATE stats SET value = value + 1 WHERE key = 'clicks'`);
+    this.sql.exec(`UPDATE stats SET value = value + 1 WHERE key = 'clicks'`);
 
     // Update IP stats if provided
     if (clientIp) {
-      await this.sql.exec(`
+      this.sql.exec(`
         INSERT INTO ip_stats (ip, clicks) VALUES (?, 1)
         ON CONFLICT(ip) DO UPDATE SET clicks = clicks + 1
       `, clientIp);
@@ -152,7 +152,7 @@ export class GameState {
 
   private async reset(): Promise<Response> {
     // Reset all game state values to empty
-    await this.sql.exec(`UPDATE game_state SET value = ''`);
+    this.sql.exec(`UPDATE game_state SET value = ''`);
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { "Content-Type": "application/json" },
