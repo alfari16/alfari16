@@ -8,10 +8,25 @@ node_compat = true
 name = "GAME_STATE"
 class_name = "GameState"
 
+[[durable_objects.bindings]]
+name = "ARTICLES"
+class_name = "Articles"
+
 # Migrations for Durable Objects
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["GameState"]
 
+[[migrations]]
+tag = "v2"
+new_sqlite_classes = ["Articles"]
+
 # Environment variables (set these via wrangler secret put)
 # MEDIUM_USER - Your Medium username (optional)
+
+[observability]
+[observability.logs]
+enabled = false
+head_sampling_rate = 0.5
+invocation_logs = true
+persist = true

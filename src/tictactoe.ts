@@ -15,7 +15,7 @@ export const stats = async (gameState: DurableObjectStub): Promise<StatsData> =>
 
 export const tictactoeData = async (gameState: DurableObjectStub): Promise<Array<Tile>> => {
   const response = await gameState.fetch("http://internal/gameState");
-  const data = await response.json();
+  const data: any = await response.json();
   return data.codes;
 };
 

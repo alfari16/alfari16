@@ -1,4 +1,5 @@
 import { GameState } from './GameState';
+import { Articles } from './Articles';
 import {
   stats,
   tictactoeData,
@@ -20,10 +21,11 @@ import o from './assets/o';
 import blank from './assets/blank';
 import medium from './assets/medium';
 
-export { GameState };
+export { GameState, Articles };
 
 interface Env {
   GAME_STATE: DurableObjectNamespace;
+  ARTICLES: DurableObjectNamespace;
 }
 
 export default {
@@ -31,9 +33,12 @@ export default {
     const url = new URL(request.url);
     const pathname = url.pathname;
 
-    // Get Durable Object instance
-    const id = env.GAME_STATE.idFromName("global-game");
-    const gameState = env.GAME_STATE.get(id);
+    // Get Durable Object instances
+    const gameId = env.GAME_STATE.idFromName("global-game");
+    const gameState = env.GAME_STATE.get(gameId);
+
+    const articlesId = env.ARTICLES.idFromName("global-articles");
+    const articles = env.ARTICLES.get(articlesId);
 
     // Route handling
     try {
@@ -46,7 +51,7 @@ export default {
         return handleTile(request, gameState, code);
       } else if (pathname.startsWith("/medium/") || pathname.startsWith("/api/medium/")) {
         const index = pathname.replace(/^\/(?:api\/)?medium\//, "");
-        return handleMedium(request, index);
+        return handleMedium(request, index, articles);
       } else {
         return new Response("Not Found", { status: 404 });
       }
@@ -165,8 +170,8 @@ async function handleTile(
   return Response.redirect("https://github.com/alfari16", 301);
 }
 
-async function handleMedium(request: Request, index: string): Promise<Response> {
-  const { title, thumbnail, url, date, description } = await getArticle(index);
+async function handleMedium(request: Request, index: string, articles: DurableObjectStub): Promise<Response> {
+  const { title, thumbnail, url, date, description } = await getArticle(index, articles);
 
   const dest = request.headers.get("sec-fetch-dest");
   const accept = request.headers.get("accept") || "";
