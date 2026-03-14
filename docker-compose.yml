@@ -1,0 +1,24 @@
+services:
+  tictactoe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tictactoe-server
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - tictactoe-data:/app/data
+#    networks:
+#      - cloudflare-tunnel
+    # No ports exposed - internal network only
+    # Access via cloudflared tunnel
+
+#networks:
+#  cloudflare-tunnel:
+#    name: cloudflare-tunnel
+#    external: true
+
+volumes:
+  tictactoe-data:
+    name: tictactoe-data
